@@ -1,411 +1,580 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 
-	<head>
-		<meta charset="utf-8">
+<head>
+    <meta charset="utf-8">
 
-		<title>reveal.js – The HTML Presentation Framework</title>
+    <title>Advanced Django admin usage</title>
 
-		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
-		<meta name="author" content="Hakim El Hattab">
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
 
-		<meta name="apple-mobile-web-app-capable" content="yes">
-		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/night.css" id="theme">
 
-		<!-- Code syntax highlighting -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
 
-		<!--[if lt IE 9]>
-		<script src="lib/js/html5shiv.js"></script>
-		<![endif]-->
-	</head>
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
 
-	<body>
+<body>
 
-		<div class="reveal">
+<div class="reveal">
 
-			<!-- Any section element inside of this container is displayed as a slide -->
-			<div class="slides">
-				<section>
-					<h1>Reveal.js</h1>
-					<h3>The HTML Presentation Framework</h3>
-					<p>
-						<small>Created by <a href="http://hakim.se">Hakim El Hattab</a> / <a href="http://twitter.com/hakimel">@hakimel</a></small>
-					</p>
-				</section>
+    <div class="slides">
+        <section>
+            <h1>Advanced usage of the Django admin</h1>
+        </section>
 
-				<section>
-					<h2>Hello There</h2>
-					<p>
-						reveal.js enables you to create beautiful interactive slide decks using HTML. This presentation will show you examples of what it can do.
-					</p>
-				</section>
+        <section>
+            <h1>Introduction</h1>
+        </section>
 
-				<!-- Example of nested vertical slides -->
-				<section>
-					<section>
-						<h2>Vertical Slides</h2>
-						<p>Slides can be nested inside of each other.</p>
-						<p>Use the <em>Space</em> key to navigate through all slides.</p>
-						<br>
-						<a href="#" class="navigate-down">
-							<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 1</h2>
-						<p>Nested slides are useful for adding additional detail underneath a high level horizontal slide.</p>
-					</section>
-					<section>
-						<h2>Basement Level 2</h2>
-						<p>That's it, time to go back up.</p>
-						<br>
-						<a href="#/2">
-							<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="transform: rotate(180deg); -webkit-transform: rotate(180deg);">
-						</a>
-					</section>
-				</section>
+        <section>
+            <h1>Purpose</h1>
+        </section>
 
-				<section>
-					<h2>Slides</h2>
-					<p>
-						Not a coder? Not a problem. There's a fully-featured visual editor for authoring these, try it out at <a href="http://slides.com" target="_blank">http://slides.com</a>.
-					</p>
-				</section>
+        <section data-background-image="./images/django_contrib_github.png">
+            <h2>django.contrib.admin</h2>
+        </section>
 
-				<section>
-					<h2>Point of View</h2>
-					<p>
-						Press <strong>ESC</strong> to enter the slide overview.
-					</p>
-					<p>
-						Hold down alt and click on any element to zoom in on it using <a href="http://lab.hakim.se/zoom-js">zoom.js</a>. Alt + click anywhere to zoom back out.
-					</p>
-				</section>
+        <section>
+            <h2>django.contrib.admin</h2>
 
-				<section>
-					<h2>Touch Optimized</h2>
-					<p>
-						Presentations look great on touch devices, like mobile phones and tablets. Simply swipe through your slides.
-					</p>
-				</section>
+            <section>
+                <ul>
+                    <li>Confusing, undocumented, full of private functions and probably also dragons</li>
+                    <li>Excels at a specific purpose, not a CMS, CRS, or whatever</li>
+                </ul>
+            </section>
 
-				<section data-markdown>
-					<script type="text/template">
-						## Markdown support
+            <section>
+                <ul>
+                    <li>MUCH improved over the past few versions, much easier to understand</li>
+                    <li>Quite a few hooks for customization if you're careful</li>
+                </ul>
+            </section>
 
-						Write content using inline or external Markdown.
-						Instructions and more info available in the [readme](https://github.com/hakimel/reveal.js#markdown).
+        </section>
 
-						```
-						<section data-markdown>
-						  ## Markdown support
+        <section>
+            <h2>Start</h2>
+            <pre><code data-trim data-noescape>
+from django.conf.urls import include, url
+from django.contrib import admin
 
-						  Write content using inline or external Markdown.
-						  Instructions and more info available in the [readme](https://github.com/hakimel/reveal.js#markdown).
-						</section>
-						```
-					</script>
-				</section>
+urlpatterns = [
+    url(r'^polls/', include('polls.urls')),
+    <mark>url(r'^admin/', admin.site.urls),</mark>
+]
+            </code></pre>
+        </section>
 
-				<section>
-					<section id="fragments">
-						<h2>Fragments</h2>
-						<p>Hit the next arrow...</p>
-						<p class="fragment">... to step through ...</p>
-						<p><span class="fragment">... a</span> <span class="fragment">fragmented</span> <span class="fragment">slide.</span></p>
+        <!-- Explain Django Concepts? -->
+        <section data-background-image="./images/adminsite.png">
+            <h2>django.contrib.admin.sites</h2>
+        </section>
+        <section>
 
-						<aside class="notes">
-							This slide has fragments which are also stepped through in the notes window.
-						</aside>
-					</section>
-					<section>
-						<h2>Fragment Styles</h2>
-						<p>There's different types of fragments, like:</p>
-						<p class="fragment grow">grow</p>
-						<p class="fragment shrink">shrink</p>
-						<p class="fragment fade-out">fade-out</p>
-						<p class="fragment current-visible">current-visible</p>
-						<p class="fragment highlight-red">highlight-red</p>
-						<p class="fragment highlight-blue">highlight-blue</p>
-					</section>
-				</section>
+            <h3>Adminsite (sites.py)</h3>
+            <!-- Screenshot of index -->
+            <section>
+<pre><code data-trim data-noescape>
+# This global object represents the default admin site, for the common case.
+# You can instantiate AdminSite in your own code to create a custom admin site.
+site = AdminSite()
+</code></pre>
+                <ul>
+                    <li>site refers to an instance of AdminSite</li>
+                    <li>Not a singleton! (can be registered multiple times!)</li>
+                    <li>Hooks Django Admin into your project</li>
+                    <li>Contains index</li>
+                    <li>Contains password change and password reset functions</li>
+                    <li>Contains login/logout function</li>
+                </ul>
+            </section>
+            <!-- Flowchart of the class! -->
+            <section>
+                <h2>AdminSite._registry</h2>
+                <p>THis is where your model ends up if you register it</p>
+            </section>
+            <section>
+                <h2>Also contains action register</h2>
+                <p>Protip, remove the 'Delete multiple' action for a nicer layout</p>
 
-				<section id="transitions">
-					<h2>Transition Styles</h2>
-					<p>
-						You can select from different transitions, like: <br>
-						<a href="?transition=none#/transitions">None</a> -
-						<a href="?transition=fade#/transitions">Fade</a> -
-						<a href="?transition=slide#/transitions">Slide</a> -
-						<a href="?transition=convex#/transitions">Convex</a> -
-						<a href="?transition=concave#/transitions">Concave</a> -
-						<a href="?transition=zoom#/transitions">Zoom</a>
-					</p>
-				</section>
+                <pre><code data-trim data-noescape>
+from django.contrib import admin
+admin.site.disable_action('delete_selected')
+</code></pre>
 
-				<section id="themes">
-					<h2>Themes</h2>
-					<p>
-						reveal.js comes with a few themes built in: <br>
-						<!-- Hacks to swap themes after the page has loaded. Not flexible and only intended for the reveal.js demo deck. -->
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/black.css'); return false;">Black (default)</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/white.css'); return false;">White</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/league.css'); return false;">League</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/sky.css'); return false;">Sky</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/beige.css'); return false;">Beige</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/simple.css'); return false;">Simple</a> <br>
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/serif.css'); return false;">Serif</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/blood.css'); return false;">Blood</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/night.css'); return false;">Night</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/moon.css'); return false;">Moon</a> -
-						<a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/solarized.css'); return false;">Solarized</a>
-					</p>
-				</section>
+            </section>
+            <section data-background-image="./images/with_checkbox.png">
 
-				<section>
-					<section data-background="#dddddd">
-						<h2>Slide Backgrounds</h2>
-						<p>
-							Set <code>data-background="#dddddd"</code> on a slide to change the background color. All CSS color formats are supported.
-						</p>
-						<a href="#" class="navigate-down">
-							<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/image-placeholder.png">
-						<h2>Image Backgrounds</h2>
-						<pre><code class="hljs">&lt;section data-background="image.png"&gt;</code></pre>
-					</section>
-					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/image-placeholder.png" data-background-repeat="repeat" data-background-size="100px">
-						<h2>Tiled Backgrounds</h2>
-						<pre><code class="hljs" style="word-wrap: break-word;">&lt;section data-background="image.png" data-background-repeat="repeat" data-background-size="100px"&gt;</code></pre>
-					</section>
-					<section data-background-video="https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.mp4,https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.webm" data-background-color="#000000">
-						<div style="background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px;">
-							<h2>Video Backgrounds</h2>
-							<pre><code class="hljs" style="word-wrap: break-word;">&lt;section data-background-video="video.mp4,video.webm"&gt;</code></pre>
-						</div>
-					</section>
-					<section data-background="http://i.giphy.com/90F8aUepslB84.gif">
-						<h2>... and GIFs!</h2>
-					</section>
-				</section>
+            </section>
+            <section data-background-image="./images/withouth_checkbox.png">
 
-				<section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-					<h2>Background Transitions</h2>
-					<p>
-						Different background transitions are available via the backgroundTransition option. This one's called "zoom".
-					</p>
-					<pre><code class="hljs">Reveal.configure({ backgroundTransition: 'zoom' })</code></pre>
-				</section>
+            </section>
+            <section>
+                <h2>Adding views</h2>
+                <pre><code data-trim data-noescape>
+def admin_view(self, view, cacheable=False):
+    """
+    Decorator to create an admin view attached to this ``AdminSite``. This
+    wraps the view and provides permission checking by calling
+    ``self.has_permission``.
+    You'll want to use this from within ``AdminSite.get_urls()``:
+        class MyAdminSite(AdminSite):
+            def get_urls(self):
+                from django.conf.urls import url
+                urls = super().get_urls()
+                urls += [
+                    url(r'^my_view/$', self.admin_view(some_view))
+                ]
+                return urls
+    By default, admin_views are marked non-cacheable using the
+    ``never_cache`` decorator. If the view can be safely cached, set
+    cacheable=True.
+    """
+</code></pre>
+                <pre><code data-trim data-noescape>
+def get_urls(self):
+    ...
+    return urlpatterns
+</code></pre>
 
-				<section data-transition="slide" data-background="#b5533c" data-background-transition="zoom">
-					<h2>Background Transitions</h2>
-					<p>
-						You can override background transitions per-slide.
-					</p>
-					<pre><code class="hljs" style="word-wrap: break-word;">&lt;section data-background-transition="zoom"&gt;</code></pre>
-				</section>
+            </section>
+            <section data-background-image="./images/index.png">
+                <h2>Customizing</h2>
+                <pre><code data-trim data-noescape>
+@never_cache
+def index(self, request, extra_context=None):
+    ...
+    return TemplateResponse(request, self.index_template or 'admin/index.html', context)
+</code></pre>
 
-				<section>
-					<h2>Pretty Code</h2>
-					<pre><code class="hljs" data-trim contenteditable>
-function linkify( selector ) {
-  if( supports3DTransforms ) {
+                <pre><code data-trim data-noescape>
+def each_context(self, request):
+    """
+    Return a dictionary of variables to put in the template context for
+    *every* page in the admin site.
+    For sites running on a subpath, use the SCRIPT_NAME value if site_url
+    hasn't been customized.
+    """
+</code></pre>
+            </section>
+        </section>
 
-    var nodes = document.querySelectorAll( selector );
+        <section data-background-image="./images/options.png">
+            <h2>django.contrib.admin.options</h2>
+        </section>
 
-    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
-      var node = nodes[i];
+        <section>
+            <h3>ModelAdmin (options.py)</h3>
+            <section>
+                <h2>Contains everything + the kitchen sink</h2>
+                <h2>Seriously, 2k lines</h2>
+            </section>
 
-      if( !node.className ) {
-        node.className += ' roll';
-      }
-    }
-  }
-}
-					</code></pre>
-					<p>Code syntax highlighting courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
-				</section>
+            <section>
+<pre><code data-trim data-noescape>
+def get_urls(self):
+  ..
+  urlpatterns = [
+    <mark>url(r'^$', wrap(self.changelist_view), name='%s_%s_changelist' % info),</mark>
+    <mark>url(r'^add/$', wrap(self.add_view), name='%s_%s_add' % info),</mark>
+    <mark>url(r'^(.+)/history/$', wrap(self.history_view), name='%s_%s_history' % info),</mark>
+    <mark>url(r'^(.+)/delete/$', wrap(self.delete_view), name='%s_%s_delete' % info),</mark>
+    <mark>url(r'^(.+)/change/$', wrap(self.change_view), name='%s_%s_change' % info),</mark>
+    # For backwards compatibility (was the change url before 1.9)
+    url(r'^(.+)/$', wrap(RedirectView.as_view(
+        pattern_name='%s:%s_%s_change' % ((self.admin_site.name,) + info)
+    ))),
+]
+return urlpatterns
+</code></pre>
+            </section>
 
-				<section>
-					<h2>Marvelous List</h2>
-					<ul>
-						<li>No order here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-					</ul>
-				</section>
+            <section>
+                <h3>Easier to understand if you know that this class contains 5 views</h3>
+                <ul>
+                    <li>Changelist</li>
+                    <li>Add</li>
+                    <li>History</li>
+                    <li>Change</li>
+                    <li>Delete</li>
+                </ul>
+            </section>
 
-				<section>
-					<h2>Fantastic Ordered List</h2>
-					<ol>
-						<li>One is smaller than...</li>
-						<li>Two is smaller than...</li>
-						<li>Three!</li>
-					</ol>
-				</section>
+        </section>
 
-				<section>
-					<h2>Tabular Tables</h2>
-					<table>
-						<thead>
-							<tr>
-								<th>Item</th>
-								<th>Value</th>
-								<th>Quantity</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Apples</td>
-								<td>$1</td>
-								<td>7</td>
-							</tr>
-							<tr>
-								<td>Lemonade</td>
-								<td>$2</td>
-								<td>18</td>
-							</tr>
-							<tr>
-								<td>Bread</td>
-								<td>$3</td>
-								<td>2</td>
-							</tr>
-						</tbody>
-					</table>
-				</section>
+        <section data-background-image="./images/changelist.png">
+            <h2>ChangeList (django.contrib.admin.views.main)</h2>
+        </section>
 
-				<section>
-					<h2>Clever Quotes</h2>
-					<p>
-						These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						&ldquo;The nice thing about standards is that there are so many to choose from&rdquo;</q> and block:
-					</p>
-					<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						&ldquo;For years there has been a theory that millions of monkeys typing at random on millions of typewriters would
-						reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.&rdquo;
-					</blockquote>
-				</section>
+        <section>
+            <h3>ChangeList (views/main.py)</h3>
+            <section>
+<pre><code data-trim data-noescape>
+@csrf_protect_m
+def changelist_view(self, request, extra_context=None):
+    """
+    The 'change list' admin view for this model.
+    """
+    ...
+    return TemplateResponse(request, self.change_list_template or [
+            'admin/%s/%s/change_list.html' % (app_label, opts.model_name),
+            'admin/%s/change_list.html' % app_label,
+            'admin/change_list.html'
+        ], context)
+</code></pre>
+                <ul>
+                    <li>Initializes changelist, handles edits and actions (on POST)</li>
+                    <li>You can replace this entire function to support, e.g multiple Changelists on a page, combine QS, etc but it's not recommended!</li>
+                </ul>
+            </section>
+            <section>
+                <ul>
+                    <li>Contains all logic for filters, ordering, date hierarchy and search</li>
+                    <li>Fun fact, with query string you can actually build a queryset in the Admin without defining a filter.</li>
+                    <li>Very useful for communicating to customers e.g ?name__icontains=Target. Expect IGNORED_PARAMS</li>
+                    <li>Not so fun fact the Pagination class does a .count() when opening the page, this can be quite expensive</li>
+                </ul>
+            </section>
+            <section>
+<pre><code data-trim data-noescape>
+def url_for_result(self, result):
+    pk = getattr(result, self.pk_attname)
+    return reverse('admin:%s_%s_change' % (self.opts.app_label,
+                                           self.opts.model_name),
+                   args=(quote(pk),),
+                   current_app=self.model_admin.admin_site.name)
+</code></pre>
+                <p>Very useful if you'r working with Polymorphic models, also useful if you use the above mentioned proxy model trick but want to
+                    keep a single model admin to reduce maintenance</p>
+            </section>
+        </section>
+        <section>
+            <section data-background-image="./images/changeview.png">
+                <h3>Add and Changeview</h3>
+            </section>
+            <section>
+<pre><code data-trim data-noescape>
+url(r'^add/$', wrap(self.add_view), name='%s_%s_add' % info),
+url(r'^(.+)/change/$', wrap(self.change_view), name='%s_%s_change' % info),
+</code></pre>
+                <p>Add view and change view both return:</p>
+                <pre><code data-trim data-noescape>
+return self.changeform_view(request, None, form_url, extra_context)
+return self.changeform_view(request, object_id, form_url, extra_context)
+</code></pre>
+            </section>
 
-				<section>
-					<h2>Intergalactic Interconnections</h2>
-					<p>
-						You can link between slides internally,
-						<a href="#/2/3">like this</a>.
-					</p>
-				</section>
+            <section>
+                <h2>def _changeform_view</h2>
+                <pre><code data-trim data-noescape>
+def _changeform_view(self, request, object_id, form_url, extra_context):
+    ...
+    return self.render_change_form(request, context, add=add, change=not add,
+                                    obj=obj, form_url=form_url)
+</code></pre>
+                <pre><code data-trim data-noescape>
+def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
+    ...
+    return TemplateResponse(request, form_template or [
+            "admin/%s/%s/change_form.html" % (app_label, opts.model_name),
+            "admin/%s/change_form.html" % app_label,
+            "admin/change_form.html"
+        ], context)
+</code></pre>
+                <p>Easy to extend, add another form to the context page, do validation, etc</p>
+                <p>Returns a template response</p>
+                <p>Template response (can be found in django.template.response) contains all the information required to render a template</p>
+                <p>Easy to read or extend context if you wish</p>
+            </section>
 
-				<section>
-					<h2>Speaker View</h2>
-					<p>There's a <a href="https://github.com/hakimel/reveal.js#speaker-notes">speaker view</a>. It includes a timer, preview of the upcoming slide as well as your speaker notes.</p>
-					<p>Press the <em>S</em> key to try it out.</p>
+            <section>
+                <p>Can be though of as a Formview</p>
+                <p>Form is generated in def get_form</p>
+                <p>FunFact, Django just uses a modelform_factory internally</p>
+                <p>Options can be found in the documentation, no easy way to pass kwargs or overwrite defaults unless you extend this function</p>
+                <p>Don't get to fancy with shoehorning a lot of stuff into the form, it's usually better to add another form to the page</p>
+            </section>
 
-					<aside class="notes">
-						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
-					</aside>
-				</section>
 
-				<section>
-					<h2>Export to PDF</h2>
-					<p>Presentations can be <a href="https://github.com/hakimel/reveal.js#pdf-export">exported to PDF</a>, here's an example:</p>
-					<iframe src="https://www.slideshare.net/slideshow/embed_code/42840540" width="445" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:3px solid #666; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-				</section>
+            <section>
+<pre><code data-trim data-noescape>
+def get_changeform_initial_data(self, request):
+    """
+    Get the initial form data from the request's GET params.
+    """
+    <mark>initial = dict(request.GET.items())</mark>
+    for k in initial:
+        try:
+            f = self.model._meta.get_field(k)
+        except FieldDoesNotExist:
+            continue
+        # We have to special-case M2Ms as a list of comma-separated PKs.
+        if isinstance(f, models.ManyToManyField):
+            initial[k] = initial[k].split(",")
+    return initial
+</code></pre>
+                <p>
+                    Cool Trick, you can prefill fields with URL parameters, e.g ?name=Target%20Holding, see
+                </p>
+            </section>
+            <section>
+<pre><code data-trim data-noescape>
+def get_object(self, request, object_id, from_field=None):
+    """
+    Return an instance matching the field and value provided, the primary
+    key is used if no field is provided. Return ``None`` if no match is
+    found or the object_id fails validation.
+    """
+    queryset = self.get_queryset(request)
+    model = queryset.model
+    field = model._meta.pk if from_field is None else model._meta.get_field(from_field)
+    try:
+        object_id = field.to_python(object_id)
+        return queryset.get(**{field.name: object_id})
+    except (model.DoesNotExist, ValidationError, ValueError):
+        return None
+</code></pre>
+                <p>Helper function that return the object</p>
+            </section>
+            <section>
+                <h2>def get_queryset</h2>
+                <p>Great place to do customization for non Django admins, e.g exclude debug/test accounts, etc</p>
+                <p>Cavecat, you cannot register a model twice, use a Proxy model if you want to have filtered views of the same QS</p>
+            </section>
+        </section>
+        <section>
+            <section data-background-image="./images/history_view.png">
+                <h3>History view</h3>
+            </section>
+            <section>
+                <p> Suprise! The Django admin actually contains a quite decent and robust Admin logging system </p>
+                <p> Silently logs the Add/Change and Delete actions of all users </p>
+                <p> Can be really usefull on production sites to debug 'weird' issues. E.g user A changing an option, B reverting the change and then both
+                    open an issue that something is broken :) </p>
+                <p> DO spice it up and log user actions, we use it to log ExamResults recalculations, reseting exams, e.g. Helps to cover your ass and you get
+                    if for free! </p>
+                <p></p>
+            </section>
 
-				<section>
-					<h2>Global State</h2>
-					<p>
-						Set <code>data-state="something"</code> on a slide and <code>"something"</code>
-						will be added as a class to the document element when the slide is open. This lets you
-						apply broader style changes, like switching the page background.
-					</p>
-				</section>
+            <section>
+<pre><code data-trim data-noescape>
+def log_addition(self, request, object, message):
+    """
+    Log that an object has been successfully added.
+    The default implementation creates an admin LogEntry object.
+    """
 
-				<section data-state="customevent">
-					<h2>State Events</h2>
-					<p>
-						Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.
-					</p>
-					<pre><code class="javascript" data-trim contenteditable style="font-size: 18px;">
-Reveal.addEventListener( 'customevent', function() {
-	console.log( '"customevent" has fired' );
-} );
-					</code></pre>
-				</section>
+def log_change(self, request, object, message):
+    """
+    Log that an object has been successfully changed.
+    The default implementation creates an admin LogEntry object.
+    """
 
-				<section>
-					<h2>Take a Moment</h2>
-					<p>
-						Press B or . on your keyboard to pause the presentation. This is helpful when you're on stage and want to take distracting slides off the screen.
-					</p>
-				</section>
+def log_deletion(self, request, object, object_repr):
+    """
+    Log that an object will be deleted. Note that this method must be
+    called before the deletion.
+    The default implementation creates an admin LogEntry object.
+    """
+</code></pre>
+            </section>
+            <section>
+<pre><code data-trim data-noescape>
+def history_view(self, request, object_id, extra_context=None):
+    "The 'history' admin view for this model."
+    ...
+    return TemplateResponse(request, self.object_history_template or [
+        "admin/%s/%s/object_history.html" % (app_label, opts.model_name),
+        "admin/%s/object_history.html" % app_label,
+        "admin/object_history.html"
+    ], context)
+</code></pre>
+            </section>
+            <section>
+                <p>Pro tip: you can easily register django.contrib.admin.models.LogEntry in the admin</p>
+            </section>
+            <section data-background-image="./images/logentries.png">
+            </section>
+        </section>
 
-				<section>
-					<h2>Much more</h2>
-					<ul>
-						<li>Right-to-left support</li>
-						<li><a href="https://github.com/hakimel/reveal.js#api">Extensive JavaScript API</a></li>
-						<li><a href="https://github.com/hakimel/reveal.js#auto-sliding">Auto-progression</a></li>
-						<li><a href="https://github.com/hakimel/reveal.js#parallax-background">Parallax backgrounds</a></li>
-						<li><a href="https://github.com/hakimel/reveal.js#keyboard-bindings">Custom keyboard bindings</a></li>
-					</ul>
-				</section>
+        <section data-background-image="./images/delete_view.png">
+            <h3>Deleteview</h3>
+            <section>
+                <p>Really straight forward, exactly what you would expect from a delete view :)</p>
 
-				<section style="text-align: left;">
-					<h1>THE END</h1>
-					<p>
-						- <a href="http://slides.com">Try the online editor</a> <br>
-						- <a href="https://github.com/hakimel/reveal.js">Source code &amp; documentation</a>
-					</p>
-				</section>
+                <pre><code data-trim data-noescape>
+@csrf_protect_m
+def delete_view(self, request, object_id, extra_context=None):
+    with transaction.atomic(using=router.db_for_write(self.model)):
+        return self._delete_view(request, object_id, extra_context)
 
-			</div>
+def _delete_view(self, request, object_id, extra_context):
+    "The 'delete' admin view for this model."
+    ...
+    return self.render_delete_form(request, context)
+</code></pre>
+            </section>
 
-		</div>
+        </section>
+        <section>
+            <h3>Layout customization</h3>
+            <section>
+            <p>Templates are surprisingly easy to overwrite, can be a bit dense at first</p>
+            <p>'Fairly' safe to do and you can get huge UX wins with small changes</p>
+            </section>
+            <section>
+<pre><code data-trim>
+@register(School)
+class SchoolAdmin(AccessInlinesAndFieldSetByName, admin.ModelAdmin):
+    ...
+	class Media:
+        css = {'screen': ('pretty.css',),
+            'tv,projector': ('lo_res.css',),
+            'print': ('newspaper.css',)}
+        js = ('animations.js', 'actions.js')
+</code></pre>
+            </section>
+            <section>
+<pre style="width:115%; margin-left:0;"><code data-trim data-noescape>
+from django.utils.text import slugify
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+class AccessInlinesAndFieldSetByName(object):
+  """
+  This mixin allows you to access both inlines and fieldsets by name instead of
+  just iterating over them in the template
+  """
 
-		<script>
+  def render_change_form(self, request, context, add=False, change=False, form_url='', obj=None):
+    fieldset_dict = {slugify(fieldset.name).replace('-', '_'): fieldset for fieldset in context['adminform']}
+    context['adminform'].fieldsets = fieldset_dict
 
-			// Full list of configuration options available at:
-			// https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize({
-				controls: true,
-				progress: true,
-				history: true,
-				center: true,
+    inline_admin_formsets_by_name = {type(inline_admin_formset.opts).__name__: inline_admin_formset
+                                     for inline_admin_formset in context['inline_admin_formsets']}
+    context['inline_admin_formsets_by_name'] = inline_admin_formsets_by_name
+    return super().render_change_form(request, context, add=add, change=change, form_url=form_url, obj=None)
+</code></pre>
+            </section>
+            <section>
+<pre style="width:115%; margin-left:0;"><code data-trim>
 
-				transition: 'slide', // none/fade/slide/convex/concave/zoom
+{% extends "admin/change_form.html" %}
 
-				// Optional reveal.js plugins
-				dependencies: [
-					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: 'plugin/zoom-js/zoom.js', async: true },
-					{ src: 'plugin/notes/notes.js', async: true }
-				]
-			});
+{% block field_sets %}
 
-		</script>
+    <div style="width:100%">
+        <div class="leftcolumn" style="width:27.5%; float:left">
 
-	</body>
+            {% with fieldset=adminform.fieldsets.schoolgegevens %}
+                {% include "admin/includes/fieldset.html" %}
+            {% endwith %}
+
+
+        </div>
+        <div class="rightcolumn" style="width:70%; float:right;">
+
+            {% with inline_admin_formset=inline_admin_formsets_by_name.SchoolContactInlineAdmin %}
+                {% include inline_admin_formset.opts.template %}
+            {% endwith %}
+
+        </div>
+    </div>
+
+{% endblock %}
+
+</code></pre>
+
+
+            </section>
+
+        </section>
+
+        <section>
+            <h3>AdminDocs</h3>
+        </section>
+
+        <section>
+
+To activate the admindocs, you will need to do the following:
+<ol>
+<li>Add django.contrib.admindocs to your INSTALLED_APPS.</li>
+<li>Add url(r'^admin/doc/', include('django.contrib.admindocs.urls')) to your urlpatterns. Make sure it’s included before the r'^admin/' entry, so that requests to /admin/doc/ don’t get handled by the latter entry.</li>
+<li>Install the docutils Python module (http://docutils.sf.net/).</li>
+<li>Optional: Using the admindocs bookmarklets requires django.contrib.admindocs.middleware.XViewMiddleware to be installed.</li>
+</ol>
+        </section>
+        <section data-background-image="./images/admin_docs.png">
+
+        </section>
+        <section>
+            <h1>Questions?</h1>
+        </section>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: false,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+          {
+            src: 'lib/js/classList.js', condition: function () {
+            return !document.body.classList;
+          }
+          },
+          {
+            src: 'plugin/markdown/marked.js', condition: function () {
+            return !!document.querySelector('[data-markdown]');
+          }
+          },
+          {
+            src: 'plugin/markdown/markdown.js', condition: function () {
+            return !!document.querySelector('[data-markdown]');
+          }
+          },
+          {
+            src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+            hljs.initHighlightingOnLoad();
+          }
+          },
+          {src: 'plugin/zoom-js/zoom.js', async: true},
+          {src: 'plugin/notes/notes.js', async: true}
+        ]
+      });
+
+    </script>
+</body>
 </html>
